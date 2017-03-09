@@ -1,0 +1,30 @@
+AllCops:
+  # Include gemspec and Rakefile
+  Include:
+    - 'app/**/*.rb'
+    - 'config/**/*.rb'
+    - 'lib/**/*.rb'
+    - 'lib/**/*.rake'
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/**/*.rb'
+    - 'bin/**/*'
+    - 'spec/**/*.rb'
+    - 'lib/**/*.rake'
+
+  DisplayCopNames: true
+  StyleGuideCopsOnly: false
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/MethodLength:
+  Max: 15
+
+Style/Documentation:
+  Enabled: false
