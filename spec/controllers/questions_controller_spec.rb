@@ -1,9 +1,8 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-
   describe 'GET #new' do
-
     before { get :new }
 
     it 'assigns new Question in @question' do
@@ -16,7 +15,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-
     subject { post :create, params: { question: attributes_for(:question) } }
 
     context 'with valid attributes' do
@@ -30,7 +28,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-
       subject { post :create, params: { question: attributes_for(:invalid_question) } }
 
       it 'not create question in DB' do

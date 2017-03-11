@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class QuestionsController < ApplicationController
-
   before_action :load_question, only: :show
 
   def new
@@ -16,8 +16,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   private
 
