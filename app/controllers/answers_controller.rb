@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'Thanks for your answer!'
     else
-      redirect_to @question, alert: 'Answer can\'t be blank!'
+      render 'questions/show'
     end
   end
 
