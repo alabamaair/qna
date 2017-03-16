@@ -4,6 +4,7 @@ RSpec.describe AnswersController, type: :controller do
   let!(:question) { create :question }
 
   describe 'POST #create' do
+    login_user
     subject { post :create, params: { answer: attributes_for(:answer), question_id: question } }
 
     context 'with valid attributes' do
