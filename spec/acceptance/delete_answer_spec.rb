@@ -14,6 +14,7 @@ feature 'Delete answer' do
     click_on 'Destroy answer'
 
     expect(page).to have_content 'Answer destroy successfully.'
+    expect(page).not_to have_content answer.body
   end
 
   scenario 'Authenticated user non-author try delete the answer' do

@@ -9,10 +9,21 @@ feature 'Create answer' do
     sign_in(user)
 
     visit question_path(question)
-    fill_in 'Body', with: 'Body'
+    fill_in 'Body', with: 'Body answer'
     click_on 'Create answer'
 
     expect(page).to have_content 'Thanks for your answer!'
+    expect(page).to have_content 'Body answer'
+  end
+
+  scenario 'Authenticated user create the invalid answer' do
+    sign_in(user)
+
+    visit question_path(question)
+    click_on 'Create answer'
+
+    expect(page).to have_content 'Body can\'t be blank'
+    expect(page).to have_content 'Errors'
   end
 
   scenario 'Non-authenticated user try to create answer' do

@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
       redirect_to questions_path, notice: 'Question destroy successfully.'
     else
       flash.now[:alert] = 'You not an author.'
-      render action: 'show'
+      render :show
     end
   end
 

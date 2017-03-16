@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Delete question' do
 
   let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
+  let!(:question) { create(:question, user: user) }
   let(:user2) { create(:user) }
 
   scenario 'Authenticated user-author try delete the question' do
@@ -13,6 +13,7 @@ feature 'Delete question' do
     click_on 'Destroy'
 
     expect(page).to have_content 'Question destroy successfully.'
+    expect(page).not_to have_content question.body
   end
 
   scenario 'Authenticated user non-author try delete the question' do

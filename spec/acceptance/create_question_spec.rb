@@ -18,6 +18,19 @@ feature 'Create question', %q{
     click_on 'Create'
 
     expect(page).to have_content 'Your question successfully created.'
+    expect(page).to have_content 'Body'
+  end
+
+  scenario 'Authenticated user create the invalid question' do
+    sign_in(user)
+
+    visit '/questions'
+    click_on 'Ask question'
+    fill_in 'Title', with: 'Title'
+    click_on 'Create'
+
+    expect(page).to have_content 'Body can\'t be blank'
+    expect(page).to have_content 'Errors'
   end
 
   scenario 'Non-authenticated user try to create question' do
