@@ -3,6 +3,8 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'GET #new' do
+    login_user
+
     before { get :new }
 
     it 'assigns new Question in @question' do
@@ -15,6 +17,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    login_user
+
     subject { post :create, params: { question: attributes_for(:question) } }
 
     context 'with valid attributes' do

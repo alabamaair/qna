@@ -1,0 +1,29 @@
+%h1
+  = @question.title
+= @question.body
+
+- if user_signed_in?
+  = link_to 'Destroy', question_path(@question),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+
+%hr
+- @question.answers.each do |a|
+  = a.body
+  - if user_signed_in? && !a.new_record?
+    = link_to 'Destroy answer', question_answer_path(@question, id: a.id),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+  %br
+
+- if user_signed_in?
+  %p Create your answer here:
+  = form_for([@question, @question.answers.build]) do |f|
+    = render 'common/errors', resource: @answer if @answer
+    .field
+      = f.label :body
+      = f.text_area :body
+    .actions
+      = f.submit 'Create answer'
+- else
+  %p For create answers you need to sign in or sign up before continuing.
