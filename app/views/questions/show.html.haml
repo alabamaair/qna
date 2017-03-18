@@ -8,17 +8,12 @@
               data: { confirm: 'Are you sure?' }
 
 %hr
-- @question.answers.each do |a|
-  = a.body
-  - if user_signed_in? && !a.new_record?
-    = link_to 'Destroy answer', question_answer_path(@question, id: a.id),
-              method: :delete,
-              data: { confirm: 'Are you sure?' }
-  %br
+.answers
+  = render 'answers'
 
 - if user_signed_in?
   %p Create your answer here:
-  = form_for([@question, @question.answers.build]) do |f|
+  = form_for [@question, @question.answers.build], remote: true do |f|
     = render 'common/errors', resource: @answer if @answer
     .field
       = f.label :body
