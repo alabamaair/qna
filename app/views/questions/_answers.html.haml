@@ -1,7 +1,0 @@
-- @question.answers.each do |a|
-  = a.body
-  - if user_signed_in? && !a.new_record?
-    = link_to 'Destroy answer', question_answer_path(@question, id: a.id),
-              method: :delete,
-              data: { confirm: 'Are you sure?' }
-    %br

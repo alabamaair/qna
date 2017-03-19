@@ -8,13 +8,16 @@
               data: { confirm: 'Are you sure?' }
 
 %hr
-.answers
-  = render 'answers'
+%ul.answers
+  - @question.answers.each do |answer|
+    %li
+      = render 'answers/answer', answer: answer
 
 - if user_signed_in?
   %p Create your answer here:
+  .errors
+    
   = form_for [@question, @question.answers.build], remote: true do |f|
-    = render 'common/errors', resource: @answer if @answer
     .field
       = f.label :body
       = f.text_area :body

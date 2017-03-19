@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Create answer' do
-
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
@@ -18,21 +17,20 @@ feature 'Create answer' do
     end
   end
 
-  scenario 'Authenticated user create the invalid answer' do
-    # sign_in(user)
-    #
-    # visit question_path(question)
-    # click_on 'Create answer'
-    #
-    # expect(page).to have_content 'Body can\'t be blank'
-    # expect(page).to have_content 'Errors'
+  scenario 'Authenticated user create the invalid answer', js: true do
+    sign_in(user)
+
+    visit question_path(question)
+    click_on 'Create answer'
+
+    expect(page).to have_content 'Body can\'t be blank'
+    expect(page).to have_content 'Errors'
   end
 
-  scenario 'Non-authenticated user try to create answer' do
+  scenario 'Non-authenticated user try to create answer', js: true do
     visit question_path(question)
 
     expect(page).to have_content 'For create answers you need to sign in or sign up before continuing.'
     expect(page).not_to have_content 'Create answer'
   end
-
 end
