@@ -5,7 +5,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     login_user
-    subject { post :create, params: { answer: attributes_for(:answer), question_id: question } }
+    subject { post :create, params: { answer: attributes_for(:answer), question_id: question, format: :js } }
 
     context 'with valid attributes' do
       it 'create answer in database' do
@@ -16,7 +16,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'with invalid attributes' do
       subject do
         post :create,
-             params: { answer: attributes_for(:invalid_answer), question_id: question }
+             params: { answer: attributes_for(:invalid_answer), question_id: question, format: :js }
       end
 
       it 'not create answer in DB' do
