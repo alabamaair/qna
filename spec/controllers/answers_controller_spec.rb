@@ -24,4 +24,32 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    login_user
+
+    let!(:answer) { create(:answer, question: question, user: @user) }
+    let(:attr) { { body: 'new body' } }
+
+    it 'assings the requested answer to @answer' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question.id, format: :js }
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'assigns th question' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question.id, format: :js }
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'changes answer attributes' do
+      patch :update, params: { id: answer, answer: attr, question_id: question.id, format: :js }
+      answer.reload
+      expect(answer.body).to eq attr[:body]
+    end
+
+    it 'render update template' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question.id, format: :js }
+      expect(response).to render_template :update
+    end
+  end
 end

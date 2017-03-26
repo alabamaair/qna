@@ -42,7 +42,6 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara'
   gem 'capybara-webkit'
-  #gem 'selenium-webdriver'
   gem 'launchy'
   gem 'database_cleaner'
 end
@@ -66,4 +65,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'haml-rails', '~> 0.9'
+gem 'jquery-rails'
 gem 'devise'

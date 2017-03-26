@@ -1,8 +1,9 @@
 <% if @answer.valid? %>
+  $('.answer-errors').html('')
   var newLi = document.createElement('li');
   newLi.innerHTML = '<%= j render 'answers/answer', answer: @answer %>';
   document.querySelector('ul.answers').appendChild(newLi);
-  document.getElementById("answer_body").value = '';
+  $('textarea#answer_body').val('');
 <% else %>
-  document.querySelector('.errors').innerHTML = '<%= j render 'common/errors', resource: @answer %>';
+  document.querySelector('.answer-errors').innerHTML = '<%= j render 'common/errors', resource: @answer %>';
 <% end %>

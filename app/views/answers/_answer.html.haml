@@ -1,4 +1,12 @@
-= answer.body
-- if user_signed_in? && !answer.new_record?
+.answer-body{id: "answer_#{answer.id}"}
+  = answer.body
+- if user_signed_in? && !answer.new_record? && current_user.author?(answer)
+  = link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
   = link_to 'Destroy answer', question_answer_path(@question, id: answer.id), method: :delete, data: { confirm: 'Are you sure?' }
+  .answer-errors-edit
+  %br
+    = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+      = f.label :body, 'Answer'
+      = f.text_area :body
+      = f.submit 'Save answer'
 %br

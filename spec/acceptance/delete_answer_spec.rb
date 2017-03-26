@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Delete answer' do
 
@@ -21,9 +21,8 @@ feature 'Delete answer' do
     sign_in(user2)
 
     visit question_path(question)
-    click_on 'Destroy answer'
 
-    expect(page).to have_content 'You not an author.'
+    expect(page).not_to have_content 'Destroy answer'
   end
 
   scenario 'Non-authenticated user try to destroy answer' do
