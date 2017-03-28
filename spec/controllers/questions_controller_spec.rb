@@ -61,4 +61,59 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    login_user
+
+    let!(:question) { create(:question, user: @user) }
+    let(:attr) { { body: 'new question body' } }
+
+    context 'with valid attributes' do
+      subject { patch :update, params: { id: question, question: attributes_for(:question), format: :js } }
+
+      it 'assigns the requested question to @question' do
+        subject
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes question attributes' do
+        patch :update, params: { id: question, question: attr, format: :js }
+        question.reload
+        expect(question.body).to eq attr[:body]
+      end
+
+      it 'render update template' do
+        expect(subject).to render_template :update
+      end
+    end
+
+    context 'with invalid attributes' do
+      subject { patch :update, params: { id: question, question: { title: '', body: '' }, format: :js } }
+
+      it 'not save question in DB' do
+        expect { subject }.to_not change(Question, :count)
+      end
+
+      it 'not change question attributes' do
+        subject
+        question.reload
+        expect(question.title).to eq question.title
+        expect(question.body).to eq question.body
+      end
+
+      it 're-renders edit view' do
+        expect(subject).to render_template :update
+      end
+    end
+
+    context 'with invalid user (non-author)' do
+      login_user
+
+      it 'not allow edit for non-author' do
+        patch :update, params: { id: question, question: attr, format: :js }
+        question.reload
+        expect(question.body).not_to eq attr[:body]
+      end
+    end
+  end
 end

@@ -31,25 +31,46 @@ RSpec.describe AnswersController, type: :controller do
     let!(:answer) { create(:answer, question: question, user: @user) }
     let(:attr) { { body: 'new body' } }
 
-    it 'assings the requested answer to @answer' do
-      patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question.id, format: :js }
-      expect(assigns(:answer)).to eq answer
+    context 'with valid attributes' do
+      subject { patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question.id, format: :js } }
+
+      it 'assigns the requested answer to @answer' do
+        subject
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns th question' do
+        subject
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes answer attributes' do
+        patch :update, params: { id: answer, answer: attr, question_id: question.id, format: :js }
+        answer.reload
+        expect(answer.body).to eq attr[:body]
+      end
+
+      it 'render update template' do
+        expect(subject).to render_template :update
+      end
     end
 
-    it 'assigns th question' do
-      patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question.id, format: :js }
-      expect(assigns(:question)).to eq question
+    context 'with invalid attributes' do
+      subject { patch :update, params: { id: answer, answer: { body: '' }, question_id: question.id, format: :js } }
+
+      it 'not create question in DB' do
+        expect { subject }.to_not change(Answer, :count)
+      end
     end
 
-    it 'changes answer attributes' do
-      patch :update, params: { id: answer, answer: attr, question_id: question.id, format: :js }
-      answer.reload
-      expect(answer.body).to eq attr[:body]
-    end
+    context 'with invalid user (non-author)' do
+      login_user
 
-    it 'render update template' do
-      patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question.id, format: :js }
-      expect(response).to render_template :update
+      it 'not allow edit for non-author' do
+        patch :update, params: { id: answer, answer: attr, question_id: question.id, format: :js }
+        answer.reload
+        expect(answer.body).not_to eq attr[:body]
+      end
     end
   end
 end
