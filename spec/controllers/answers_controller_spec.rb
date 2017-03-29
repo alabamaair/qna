@@ -73,4 +73,28 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    login_user
+
+    let!(:answer) { create(:answer, question: question, user: @user) }
+
+    subject { delete :destroy, params: { id: answer, question_id: question, format: :js } }
+
+    it 'delete answer from database' do
+      expect { subject }.to change(Answer, :count).by(-1)
+    end
+
+    context 'authenticated user non-author' do
+      login_user
+
+      subject { delete :destroy, params: { id: answer, question_id: question, format: :js } }
+
+      it 'cannot delete answer' do
+        expect { subject }.to_not change(Answer, :count)
+      end
+
+    end
+
+  end
 end
