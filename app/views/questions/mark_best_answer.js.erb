@@ -1,8 +1,8 @@
 $('.checkbox-marker').on('change', function() {
   $('.checkbox-marker').not(this).prop('checked', false);
   if($(this).is(":checked")) {
-    $('#answer_<%= @answer.id %>').addClass("best-answer");
+    $('#cont-answer-<%= @answer.id %>').addClass("best-answer").prependTo("ul.answers");
   } else {
-    $('#answer_<%= @answer.id %>').removeClass("best-answer");
+    $('#cont-answer-<%= @answer.id %>').removeClass("best-answer");
   }
 });

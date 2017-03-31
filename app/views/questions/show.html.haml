@@ -15,8 +15,7 @@
 %hr
 %ul.answers
   - @question.answers.each do |answer|
-    %li
-      = render 'answers/answer', answer: answer
+    = render 'answers/answer', answer: answer
 
 - if user_signed_in?
   %p Create your answer here:

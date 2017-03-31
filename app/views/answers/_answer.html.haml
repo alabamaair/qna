@@ -1,18 +1,19 @@
-.answer-body{id: "answer_#{answer.id}"}
-  = answer.body
+.container-answer{id: "cont-answer-#{answer.id}"}
+  %li.answer-body{id: "answer_#{answer.id}"}
+    = answer.body
 
   - if user_signed_in? && current_user.author?(answer.question)
     = check_box_tag 'best', true, answer.best, onchange: "$(this).data('params', 'best=' + this.checked)", class: 'checkbox-marker',
       data: { remote: true, url: url_for(action: :mark_best_answer, id: answer.question.id, answer_id: answer.id), method: :put }
     = label_tag 'Mark as best'
 
-- if user_signed_in? && !answer.new_record? && current_user.author?(answer)
-  .action-links{id: "links_#{answer.id}"}
-    = link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-    = link_to 'Destroy answer', answer, method: :delete, remote: true, data: { confirm: "Delete your answer?" }
-  %br
-    = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
-      .answer-errors-edit
-      = f.label :body, 'Answer'
-      = f.text_area :body
-      = f.submit 'Save answer'
+  - if user_signed_in? && !answer.new_record? && current_user.author?(answer)
+    .action-links{id: "links_#{answer.id}"}
+      = link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+      = link_to 'Destroy answer', answer, method: :delete, remote: true, data: { confirm: "Delete your answer?" }
+    %br
+      = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+        .answer-errors-edit
+        = f.label :body, 'Answer'
+        = f.text_area :body
+        = f.submit 'Save answer'
