@@ -2,4 +2,5 @@
   $('.answer-errors').html('<%= j render 'common/errors', resource: @answer %>');
 <% else %>
   $('#answer_<%= @answer.id %>').remove();
+  $('#links_<%= @answer.id %>').hide();
 <% end %>
