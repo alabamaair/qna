@@ -13,9 +13,7 @@
     = render 'form', question: @question
 
 %hr
-%ul.answers
-  - @question.answers.each do |answer|
-    = render 'answers/answer', answer: answer
+%ul.answers= render @question.answers.sort_by { |a| a.best ? -1: 0 }
 
 - if user_signed_in?
   %p Create your answer here:

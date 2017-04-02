@@ -116,4 +116,41 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+
+  describe 'PUT #mark_best_answer' do
+    login_user
+
+    let!(:question) { create(:question, user: @user) }
+    let!(:answer) { create(:answer, user: @user, question: question) }
+    let(:answer2) { create(:answer, user: @user, question: question) }
+
+    before { put :mark_best_answer, params: { id: question, answer_id: answer, format: :js } }
+
+    context 'with valid user' do
+      it 'assigns the requested question to @question and answer to @answer' do
+        expect(assigns(:question)).to eq question
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'changes answer attribute' do
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'render mark template' do
+        expect(response).to render_template :mark_best_answer
+      end
+    end
+
+    context 'with invalid user' do
+      login_user
+
+      it 'not save answer attribute' do
+        put :mark_best_answer, params: { id: question, answer_id: answer2, format: :js }
+        answer.reload
+        expect(answer2.best).to eq false
+      end
+    end
+  end
 end

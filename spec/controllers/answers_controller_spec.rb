@@ -93,8 +93,6 @@ RSpec.describe AnswersController, type: :controller do
       it 'cannot delete answer' do
         expect { subject }.to_not change(Answer, :count)
       end
-
     end
-
   end
 end

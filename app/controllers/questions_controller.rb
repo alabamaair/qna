@@ -40,13 +40,10 @@ class QuestionsController < ApplicationController
   end
 
   def mark_best_answer
-    @answer = Answer.find params[:answer_id]
-    if params[:best]
+    if current_user.author?(@question)
       @question.unchecked_answers
-      @answer.update_attribute(:best, params[:best])
-      @question.update_attribute(:best_answer, @answer)
-    else
-      @question.update_attribute(:best_answer, nil)
+      @answer = Answer.find params[:answer_id]
+      @answer.update_attribute(:best, true)
     end
   end
 
