@@ -41,9 +41,8 @@ class QuestionsController < ApplicationController
 
   def mark_best_answer
     if current_user.author?(@question)
-      @question.unchecked_answers
       @answer = Answer.find params[:answer_id]
-      @answer.update_attribute(:best, true)
+      @answer.mark_best
     end
   end
 
