@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :destroy]
+  before_action :load_question, only: [:show, :update, :destroy, :mark_best_answer]
 
   def index
     @questions = Question.all
@@ -9,6 +9,10 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+  end
+
+  def update
+    @question.update(question_params) if current_user.author?(@question)
   end
 
   def create
@@ -32,6 +36,13 @@ class QuestionsController < ApplicationController
     else
       flash.now[:alert] = 'You not an author.'
       render :show
+    end
+  end
+
+  def mark_best_answer
+    if current_user.author?(@question)
+      @answer = Answer.find params[:answer_id]
+      @answer.mark_best
     end
   end
 

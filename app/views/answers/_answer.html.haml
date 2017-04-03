@@ -1,4 +1,19 @@
-= answer.body
-- if user_signed_in? && !answer.new_record?
-  = link_to 'Destroy answer', question_answer_path(@question, id: answer.id), method: :delete, data: { confirm: 'Are you sure?' }
-%br
+.container-answer{id: "container-answer-#{answer.id}"}
+  - if answer.best
+    .best-answer= '=== Best answer ==='
+  %li.answer-body{id: "answer_#{answer.id}"}
+    = answer.body
+
+  - if user_signed_in? && !answer.new_record?
+    .action-links{id: "links_#{answer.id}"}
+      - if current_user.author?(answer.question)
+        = button_to 'Mark as best', { controller: :questions, action: :mark_best_answer, id: answer.question.id, answer_id: answer.id }, method: :put, remote: true, class: 'best-answer-button'
+      - if current_user.author?(answer)
+        = link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+        = link_to 'Destroy answer', answer, method: :delete, remote: true, data: { confirm: "Delete your answer?" }
+    %br
+      = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+        .answer-errors-edit
+        = f.label :body, 'Answer'
+        = f.text_area :body
+        = f.submit 'Save answer'

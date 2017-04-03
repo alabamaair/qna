@@ -61,4 +61,96 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    login_user
+
+    let!(:question) { create(:question, user: @user) }
+    let(:attr) { { body: 'new question body' } }
+
+    context 'with valid attributes' do
+      subject { patch :update, params: { id: question, question: attributes_for(:question), format: :js } }
+
+      it 'assigns the requested question to @question' do
+        subject
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes question attributes' do
+        patch :update, params: { id: question, question: attr, format: :js }
+        question.reload
+        expect(question.body).to eq attr[:body]
+      end
+
+      it 'render update template' do
+        expect(subject).to render_template :update
+      end
+    end
+
+    context 'with invalid attributes' do
+      subject { patch :update, params: { id: question, question: { title: '', body: '' }, format: :js } }
+
+      it 'not save question in DB' do
+        expect { subject }.to_not change(Question, :count)
+      end
+
+      it 'not change question attributes' do
+        subject
+        question.reload
+        expect(question.title).to eq question.title
+        expect(question.body).to eq question.body
+      end
+
+      it 're-renders edit view' do
+        expect(subject).to render_template :update
+      end
+    end
+
+    context 'with invalid user (non-author)' do
+      login_user
+
+      it 'not allow edit for non-author' do
+        patch :update, params: { id: question, question: attr, format: :js }
+        question.reload
+        expect(question.body).not_to eq attr[:body]
+      end
+    end
+  end
+
+
+  describe 'PUT #mark_best_answer' do
+    login_user
+
+    let!(:question) { create(:question, user: @user) }
+    let!(:answer) { create(:answer, user: @user, question: question) }
+    let(:answer2) { create(:answer, user: @user, question: question) }
+
+    before { put :mark_best_answer, params: { id: question, answer_id: answer, format: :js } }
+
+    context 'with valid user' do
+      it 'assigns the requested question to @question and answer to @answer' do
+        expect(assigns(:question)).to eq question
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'changes answer attribute' do
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'render mark template' do
+        expect(response).to render_template :mark_best_answer
+      end
+    end
+
+    context 'with invalid user' do
+      login_user
+
+      it 'not save answer attribute' do
+        put :mark_best_answer, params: { id: question, answer_id: answer2, format: :js }
+        answer.reload
+        expect(answer2.best).to eq false
+      end
+    end
+  end
 end

@@ -1,0 +1,21 @@
+var topMarker = $('.best-answer');
+var oldContainer = topMarker.closest('.container-answer');
+var newTopMarker = $('<div class="best-answer">=== Best answer ===</div>');
+var newContainer = $('<%= "#container-answer-#{@answer.id}" %>');
+
+<% if @answer.best %>
+  newContainer.detach();
+  if (topMarker.length) {
+    topMarker.detach();
+    topMarker.insertBefore(newContainer.find('li.answer-body'));
+    oldContainer.find('.best-answer-button').show();
+  } else {
+    newTopMarker.insertBefore(newContainer.find('li.answer-body'));
+  }
+  newContainer.find('.best-answer-button').hide();
+  <% if @question.answers.count == 1 %>
+    newContainer.appendTo('ul.answers');
+  <% else %>
+    newContainer.insertBefore('.container-answer:first-child');
+  <% end %>
+<% end %>

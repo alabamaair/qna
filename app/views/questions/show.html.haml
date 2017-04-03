@@ -1,25 +1,27 @@
-%h1
+%h1.question-title{id: "question_title_#{@question.id}"}
   = @question.title
-= @question.body
+.question-body{id: "question_body_#{@question.id}"}
+  = @question.body
 
-- if user_signed_in?
+- if user_signed_in? && current_user.author?(@question)
+  = link_to 'Edit', '', class: 'edit-question-link', data: { question_id: @question.id }
   = link_to 'Destroy', question_path(@question),
               method: :delete,
               data: { confirm: 'Are you sure?' }
+  .errors
+  .edit-question
+    = render 'form', question: @question
 
 %hr
-%ul.answers
-  - @question.answers.each do |answer|
-    %li
-      = render 'answers/answer', answer: answer
+%ul.answers= render @question.answers.sort_by { |a| a.best ? -1: 0 }
 
 - if user_signed_in?
   %p Create your answer here:
-  .errors
-    
+
   = form_for [@question, @question.answers.build], remote: true do |f|
     .field
       = f.label :body
+      .answer-errors
       = f.text_area :body
     .actions
       = f.submit 'Create answer'

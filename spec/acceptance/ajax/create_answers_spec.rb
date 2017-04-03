@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Create answer' do
   given(:user) { create(:user) }
@@ -24,7 +24,6 @@ feature 'Create answer' do
     click_on 'Create answer'
 
     expect(page).to have_content 'Body can\'t be blank'
-    expect(page).to have_content 'Errors'
   end
 
   scenario 'Non-authenticated user try to create answer', js: true do

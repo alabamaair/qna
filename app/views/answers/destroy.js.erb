@@ -1,0 +1,5 @@
+<% if @answer.errors.present? %>
+  $('.answer-errors').html('<%= j render 'common/errors', resource: @answer %>');
+<% else %>
+  $('#container-answer-<%= @answer.id %>').remove();
+<% end %>
