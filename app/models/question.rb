@@ -4,5 +4,8 @@ class Question < ApplicationRecord
   has_one :best_answer, -> { where(best: true) }, class_name: Answer
   belongs_to :user
 
-  validates :title, :body, presence: true
+  has_many :attachments, as: :attachable, dependent: :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attributes| attributes[:file].nil? }
+
+  validates :title, :body, :user_id, presence: true
 end

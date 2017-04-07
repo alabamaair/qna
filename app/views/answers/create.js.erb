@@ -1,8 +1,10 @@
 <% if @answer.valid? %>
   $('.answer-errors').html('')
-  var newLi = document.createElement('li');
-  newLi.innerHTML = '<%= j render 'answers/answer', answer: @answer %>';
-  document.querySelector('ul.answers').appendChild(newLi);
+  <% if remotipart_submitted? %>
+    $('ul.answers').append("<%=  j "#{render(@answer)}" %>");
+  <% else %>
+    $('ul.answers').append("<%=  j render(@answer) %>");
+  <% end %>
   $('textarea#answer_body').val('');
 <% else %>
   document.querySelector('.answer-errors').innerHTML = '<%= j render 'common/errors', resource: @answer %>';

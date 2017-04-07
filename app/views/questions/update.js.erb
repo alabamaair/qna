@@ -1,9 +1,6 @@
 <% if @question.valid? %>
   $('.errors').html('');
-  $('#question_title_<%= @question.id %>').html('<%= j @question.title %>');
-  $('#question_body_<%= @question.id %>').html('<%= j @question.body %>');
-  $('form#edit-question-' + <%= @question.id %>).hide();
-  $('.edit-question-link').show();
+  $('.question-container').html('<%= j render @question %>');
 <% else %>
   $('.errors').html('<%= j render 'common/errors', resource: @question %>');
 <% end %>

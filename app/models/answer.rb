@@ -3,7 +3,10 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
 
-  validates :body, :question_id, presence: true
+  has_many :attachments, as: :attachable, dependent: :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attributes| attributes[:file].nil? }
+
+  validates :body, :question_id, :user_id, presence: true
 
   default_scope { order(created_at: :asc) }
 

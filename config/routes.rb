@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     put :mark_best_answer, on: :member
     resources :answers, shallow: true
   end
+  resources :attachments, only: :destroy
 
   root to: 'questions#index'
 end
