@@ -25,4 +25,18 @@ feature 'Create attachment to answer', %q{
     end
   end
 
+  scenario 'Authenticated user create multiple attachments for answer', js: true do
+    fill_in 'Body', with: 'Body answer'
+    click_on 'add attachment'
+    click_on 'add attachment'
+    page.all(:css, 'input[type="file"]').each do |el|
+      el.set "#{Rails.root}/spec/spec_helper.rb"
+    end
+    click_on 'Create answer'
+
+    within '.answers' do
+      expect(page).to have_link 'spec_helper', count: 3
+    end
+  end
+
 end

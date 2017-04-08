@@ -19,7 +19,10 @@
           = f.label :body, 'Answer'
           = f.text_area :body
 
-          = f.fields_for :attachments do |attachment|
-            = render 'common/attachment_fields', f: attachment
-          = link_to_add_association 'add attachment', f, :attachments, partial: 'common/attachment_fields'
-          = f.submit 'Save answer'
+          .field
+            = f.fields_for :attachments do |attachment|
+              = render 'common/attachment_fields', f: attachment
+            .links
+              = link_to_add_association 'add attachment', f, :attachments, partial: 'common/attachment_fields'
+          .actions
+            = f.submit 'Save answer'
