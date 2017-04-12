@@ -1,9 +1,10 @@
 <% if @question.valid? %>
   $('.errors').html('');
-  $('#question_title_<%= @question.id %>').html('<%= j @question.title %>');
-  $('#question_body_<%= @question.id %>').html('<%= j @question.body %>');
-  $('form#edit-question-' + <%= @question.id %>).hide();
-  $('.edit-question-link').show();
+  <% if remotipart_submitted? %>
+    $('#question_container<%= @question.id %>').html("<%=  j "#{render(@question)}" %>");
+  <% else %>
+    $('#question_container<%= @question.id %>').html("<%=  j render(@question) %>");
+  <% end %>
 <% else %>
   $('.errors').html('<%= j render 'common/errors', resource: @question %>');
 <% end %>

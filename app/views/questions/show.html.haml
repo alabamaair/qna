@@ -1,28 +1,22 @@
-%h1.question-title{id: "question_title_#{@question.id}"}
-  = @question.title
-.question-body{id: "question_body_#{@question.id}"}
-  = @question.body
-
-- if user_signed_in? && current_user.author?(@question)
-  = link_to 'Edit', '', class: 'edit-question-link', data: { question_id: @question.id }
-  = link_to 'Destroy', question_path(@question),
-              method: :delete,
-              data: { confirm: 'Are you sure?' }
-  .errors
-  .edit-question
-    = render 'form', question: @question
+.question-container{id: "question_container#{@question.id}"}
+  = render @question
 
 %hr
-%ul.answers= render @question.answers.sort_by { |a| a.best ? -1: 0 }
+%ul.answers= render @question.answers.reject(&:new_record?).sort_by { |a| a.best ? -1: 0 }
 
 - if user_signed_in?
   %p Create your answer here:
 
-  = form_for [@question, @question.answers.build], remote: true do |f|
+  = form_for [@question, @answer], remote: true do |f|
     .field
       = f.label :body
       .answer-errors
       = f.text_area :body
+    .field
+      = f.fields_for :attachments do |attachment|
+        = render 'common/attachment_fields', f: attachment
+      .links
+        = link_to_add_association 'add attachment', f, :attachments, partial: 'common/attachment_fields'
     .actions
       = f.submit 'Create answer'
 - else
