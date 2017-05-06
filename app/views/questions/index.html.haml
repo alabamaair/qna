@@ -1,6 +1,17 @@
-- @questions.each do |q|
-  = q.title
-  = q.body
-  %br
-
 = link_to 'Ask question', new_question_path
+
+- @questions.each do |q|
+  %h2= q.title
+  %p{style: "font-size: 75%; color: #999; text-align: right"}
+    Created #{q.user.try(:email)} at #{q.created_at}
+
+  %p= q.body
+
+  %p
+  = link_to 'Show', question_path(q)
+
+  = render 'common/rating', resource: q
+
+  | Answers:
+  = q.answers.count
+  %hr/

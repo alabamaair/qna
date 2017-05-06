@@ -1,0 +1,27 @@
+.voting{id: "voting_#{resource.id}"}
+  .vote-errors{id: "vote-errors_#{resource.id}"}
+  - if user_signed_in?
+    - unless current_user.author?(resource)
+      .links-vote{id: "vote_#{resource.id}"}
+        = link_to 'Vote up',
+         polymorphic_path([:vote_up, resource]),
+         method: :put, remote: true,
+         form: { "data-type" => "json" },
+         style: "#{'display:none' if current_user.voted_for?(resource)}",
+         data: { resource_id: resource.id }
+
+        = link_to 'Vote down',
+         polymorphic_path([:vote_down, resource]),
+         method: :put, remote: true,
+         form: { "data-type" => "json" },
+         style: "#{'display:none' if current_user.voted_for?(resource)}",
+         data: { resource_id: resource.id }
+
+        = link_to 'Unvote',
+         polymorphic_path([:unvote, resource]),
+         method: :delete, remote: true,
+         form: { "data-type" => "json" },
+         style: "#{'display:none' unless current_user.voted_for?(resource)}",
+         data: { resource_id: resource.id }
+
+  .rating{id: "rating_#{resource.id}"} Rating: #{resource.rating} Votes count: #{resource.votes.count}

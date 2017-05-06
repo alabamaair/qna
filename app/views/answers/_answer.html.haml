@@ -6,6 +6,8 @@
       = answer.body
       = render 'common/attachments', resource: answer
 
+      = render 'common/rating', resource: answer
+
     - if user_signed_in? && !answer.new_record?
       .action-links{id: "links_#{answer.id}"}
         - if current_user.author?(answer.question)

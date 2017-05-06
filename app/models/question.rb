@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 class Question < ApplicationRecord
+  include Votable
+
   has_many :answers, dependent: :destroy
-  has_one :best_answer, -> { where(best: true) }, class_name: Answer
+  has_one :best_answer, -> { where(best: true) }, class_name: 'Answer'
   belongs_to :user
 
   has_many :attachments, as: :attachable, dependent: :destroy
