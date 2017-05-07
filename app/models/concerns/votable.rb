@@ -8,4 +8,8 @@ module Votable
   def rating
     votes.sum(:value)
   end
+
+  def label_vote
+    "#{self.class.name.underscore}_#{self.id}"
+  end
 end

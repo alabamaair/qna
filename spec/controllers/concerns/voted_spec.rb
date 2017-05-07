@@ -32,10 +32,10 @@ RSpec.shared_examples 'voted' do
         expect { vote_up_invalid }.not_to change { votable.rating }
       end
 
-      it 'renders json, status 422 and error text' do
+      it 'renders json, status 403 and error text' do
         vote_up_invalid
         expect(response.headers['Content-Type']).to match /json/
-        expect(response.status).to eq(422)
+        expect(response.status).to eq(403)
         expect(response.body).to eq('Sorry, it is not possible, sir, you\'re author.')
       end
     end
@@ -68,10 +68,10 @@ RSpec.shared_examples 'voted' do
         expect { vote_down_invalid }.not_to change { votable.rating }
       end
 
-      it 'renders json, status 422 and error text' do
+      it 'renders json, status 403 and error text' do
         vote_down_invalid
         expect(response.headers['Content-Type']).to match /json/
-        expect(response.status).to eq(422)
+        expect(response.status).to eq(403)
         expect(response.body).to eq('Sorry, it is not possible, sir, you\'re author.')
       end
     end

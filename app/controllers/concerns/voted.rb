@@ -10,34 +10,46 @@ module Voted
   def vote_up
     vote = @votable.votes.build(user_id: current_user.id, value: 1)
     if vote.save
-      render json: { id: @votable.id, rating: @votable.rating }
+      render_success
     else
-      render json: 'Error voting.', status: :unprocessable_entity
+      render_error
     end
   end
 
   def vote_down
     vote = @votable.votes.build(user_id: current_user.id, value: -1)
     if vote.save
-      render json: { id: @votable.id, rating: @votable.rating }
+      render_success
     else
-      render json: 'Error voting.', status: :unprocessable_entity
+      render_error
     end
   end
 
   def unvote
     @votable.votes.where(:user_id == current_user.id).destroy_all
-    render json: { id: @votable.id, rating: @votable.rating }
+    render_success
   end
+
+  # def label_vote
+  #   "#{@votable.class.name.underscore}_#{@votable.id}"
+  # end
 
   private
 
+  def render_success
+    render json: { label_vote: @votable.label_vote, rating: @votable.rating }
+  end
+
+  def render_error
+    render json: 'Error voting.', status: :unprocessable_entity
+  end
+
   def render_error_author
-    render json: 'Sorry, it is not possible, sir, you\'re author.', status: :unprocessable_entity if current_user.author? @votable
+    render json: 'Sorry, it is not possible, sir, you\'re author.', status: :forbidden if current_user.author? @votable
   end
 
   def render_error_double
-    render json: 'Sorry, you already voted.', status: :unprocessable_entity if current_user.voted_for? @votable
+    render json: 'Sorry, you already voted.', status: :forbidden if current_user.voted_for? @votable
   end
 
   def model_klass
