@@ -30,10 +30,6 @@ module Voted
     render_success
   end
 
-  # def label_vote
-  #   "#{@votable.class.name.underscore}_#{@votable.id}"
-  # end
-
   private
 
   def render_success
