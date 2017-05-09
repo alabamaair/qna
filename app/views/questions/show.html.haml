@@ -1,6 +1,8 @@
 .question-container{id: "question_container#{@question.id}"}
   = render @question
 
+  = render 'common/rating', resource: @question
+
 %hr
 %ul.answers= render @question.answers.reject(&:new_record?).sort_by { |a| a.best ? -1: 0 }
 
