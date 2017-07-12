@@ -12,9 +12,15 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :questions, concerns: :votable do
     put :mark_best_answer, on: :member
-    resources :answers, shallow: true, concerns: :votable
+    resources :comments, only: :create, defaults: { commentable: 'question' }
+    resources :answers, shallow: true, concerns: :votable do
+      resources :comments, only: :create, defaults: { commentable: 'answer' }
+    end
   end
   resources :attachments, only: :destroy
+  resources :comments, only: :destroy
 
   root to: 'questions#index'
+
+  mount ActionCable.server => '/cable'
 end

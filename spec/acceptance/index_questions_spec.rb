@@ -8,6 +8,5 @@ feature 'Index questions' do
     visit '/questions'
 
     expect(page).to have_content /Title/, minimum: 2
-    expect(page).to have_content /Body/, minimum: 2
   end
 end

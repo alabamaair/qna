@@ -8,6 +8,8 @@ class Answer < ApplicationRecord
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attributes| attributes[:file].nil? }
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   validates :body, :question_id, :user_id, presence: true
 
   default_scope { order(created_at: :asc) }

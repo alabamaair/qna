@@ -1,10 +1,13 @@
 .question-container{id: "question_container#{@question.id}"}
-  = render @question
+  = render 'questions/question_item', question: @question
 
   = render 'common/rating', resource: @question
 
+  .question_comments{id: "comments_#{@question.id}"}
+    = render 'comments/comments', commentable: @question
+
 %hr
-%ul.answers= render @question.answers.reject(&:new_record?).sort_by { |a| a.best ? -1: 0 }
+%ul.answers{data: { question: "#{@question.id}" }}= render @question.answers.reject(&:new_record?).sort_by { |a| a.best ? -1: 0 }
 
 - if user_signed_in?
   %p Create your answer here:

@@ -1,0 +1,7 @@
+<% if @comment.errors.present? %>
+  $('.errors_comments').html('<%= j render 'common/errors', resource: @comment %>');
+<% else %>
+  $('.errors_comments').html('');
+  $('textarea#comment_text_' + <%= @comment.commentable_id %>).val('');
+  $('form#add_comment_' + <%= @comment.commentable_id %>).hide();
+<% end %>

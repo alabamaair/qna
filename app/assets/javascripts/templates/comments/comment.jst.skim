@@ -1,0 +1,4 @@
+.comment id="comment_#{@comment.id}"
+  =@comment.body
+  -if gon.user_id == @comment.user_id
+    a format="js" data-remote="true" rel="nofollow" data-method="delete" href="/comments/#{@comment.id}" Delete

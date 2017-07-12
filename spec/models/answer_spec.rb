@@ -8,4 +8,6 @@ RSpec.describe Answer, type: :model do
   it { should have_many(:attachments) }
 
   it { should accept_nested_attributes_for :attachments }
+
+  it { should have_many(:comments).dependent(:destroy) }
 end

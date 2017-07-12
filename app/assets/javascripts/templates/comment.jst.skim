@@ -1,0 +1,4 @@
+.comments
+  .comments_body id="commentable_#{@commentable_klass}_#{@commentable_id}"
+    ==JST["templates/comments/form"](commentable_id: @commentable_id)
+

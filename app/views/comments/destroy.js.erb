@@ -1,0 +1,5 @@
+<% if @comment.errors.present? %>
+  $('.errors_comments').html('<%= j render 'common/errors', resource: @comment %>');
+<% else %>
+  $('#comment_<%= @comment.id %>').remove();
+<% end %>

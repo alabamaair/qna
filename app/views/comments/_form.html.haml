@@ -1,0 +1,7 @@
+.comments_form
+  = form_for [commentable, commentable.comments.new], remote: true, html: { id: "add_comment_#{commentable.id}"} do |f|
+    = f.label :body, 'Comment text'
+    .errors_comments
+    = f.text_area :body, id: "comment_text_#{commentable.id}"
+    .actions
+      = f.submit
