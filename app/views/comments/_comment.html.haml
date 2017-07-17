@@ -1,0 +1,5 @@
+.comment{ id: "comment_#{comment.id}"}
+  = comment.body
+
+  - if current_user.try(:author?, comment)
+    = link_to 'Delete', comment, method: :delete, remote: true, format: :js

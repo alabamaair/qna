@@ -1,16 +1,2 @@
-%h1.question-title{id: "question_title_#{@question.id}"}
-  = @question.title
-.question-body{id: "question_body_#{@question.id}"}
-  = @question.body
-- if @question.attachments.any?
-  .question-attachments{id: "question_attachments_#{@question.id}"}
-    = render 'common/attachments', resource: @question
-
-- if user_signed_in? && current_user.author?(@question)
-  = link_to 'Edit', '', class: 'edit-question-link', data: { question_id: @question.id }
-  = link_to 'Destroy', question_path(@question),
-              method: :delete,
-              data: { confirm: 'Are you sure?' }
-  .errors
-  .edit-question
-    = render 'form', question: @question
+.question_item
+  %h2= link_to question.title, question_path(question)

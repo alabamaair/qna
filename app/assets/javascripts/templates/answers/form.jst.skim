@@ -1,0 +1,9 @@
+form.edit_answer id="edit-answer-#{@answer.id}" action="/answers/#{@answer.id}" accept-charset="UTF-8" data-remote="true" method="post"
+  input name="utf8" type="hidden" value="true"
+  input type="hidden" name="_method" value="patch"
+  label for="answer_body" Answer
+  .answer-errors-edit
+  textarea.form-control rows="5" name="answer[body]" id="answer_body"
+    =@answer.body
+  .actions
+    input type="submit" name="commit" value="Save answer" data-answer-id="#{@answer.id}" data-disable-with="Save answer"

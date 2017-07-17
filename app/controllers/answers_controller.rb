@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :load_answer, only: [:update, :destroy]
+  after_action :publish_answer, only: [:create]
 
   def new
     @answer = Answer.new
@@ -32,5 +33,16 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find params[:id]
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("/questions/#{@question.id}/answers",
+                                 answer: @answer,
+                                 rating: @answer.rating,
+                                 attachments: @answer.attachments.as_json(methods: :with_meta),
+                                 question_user_id: @question.user_id,
+                                 method: 'publish')
   end
 end

@@ -1,4 +1,6 @@
 $(document).on 'turbolinks:load', ->
+  answersList = $('.answers')
+
   $('.edit-answer-link').on 'click', (e) ->
     e.preventDefault();
     $(this).hide();

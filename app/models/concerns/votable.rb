@@ -10,6 +10,6 @@ module Votable
   end
 
   def label_vote
-    "#{self.class.name.underscore}_#{self.id}"
+    "#{self.class.name.underscore}_#{id}"
   end
 end

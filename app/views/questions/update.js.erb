@@ -1,9 +1,9 @@
 <% if @question.valid? %>
   $('.errors').html('');
   <% if remotipart_submitted? %>
-    $('#question_container<%= @question.id %>').html("<%=  j "#{render(@question)}" %>");
+    $('#question_container<%= @question.id %>').html("<%=  j "#{render 'questions/question_item', question: @question}" %>");
   <% else %>
-    $('#question_container<%= @question.id %>').html("<%=  j render(@question) %>");
+    $('#question_container<%= @question.id %>').html("<%=  j render 'questions/question_item', question: @question %>");
   <% end %>
 <% else %>
   $('.errors').html('<%= j render 'common/errors', resource: @question %>');

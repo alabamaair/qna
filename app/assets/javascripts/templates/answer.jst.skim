@@ -1,0 +1,30 @@
+.container-answer id="container-answer-#{@answer.id}"
+  - if @answer.best
+    .best-answer= '=== Best answer ==='
+  li.answer-body id="answer_#{@answer.id}"
+    =@answer.body
+
+    ul.attachments
+      - for attachment in @attachments
+       .attachment id="attachment_#{attachment.id}"
+         li
+           a href=attachment.with_meta.url =attachment.with_meta.filename
+         -if gon.user_id == @answer.user_id
+           a href="/attachments/#{attachment.id}" data-remote="true" data-method="delete" rel="nofollow" remove attachment
+
+  ==JST["templates/common/rating"](resource: @answer, rating: @rating)
+
+  -if gon.user_id == @question_user_id
+    a.best-answer-button data-remote="true" rel="nofollow" data-method="put" href="/questions/#{@answer.question_id}/mark_best_answer?answer_id=#{@answer.id}" Mark as best
+  -if gon.user_id == @answer.user_id
+    a.edit_answer_link href="#" data-answer-id=@answer.id Edit answer
+    a data-remote="true" rel="nofollow" data-method="delete" href="/answers/#{@answer.id}" Destroy answer
+
+  ==JST["templates/answers/form"](answer: @answer)
+
+  ==JST["templates/comment"](commentable_id: @answer.id, commentable_klass: @commentable_klass)
+
+
+
+
+

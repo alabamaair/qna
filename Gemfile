@@ -13,7 +13,8 @@ gem 'pg', '~> 0.18'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
-gem 'sass-rails', github: "rails/sass-rails"
+#gem 'sass-rails', github: "rails/sass-rails"
+gem 'sass-rails', '~> 5.0', '>= 5.0.6' # error load skim gem
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -71,3 +72,6 @@ gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
+
+gem 'gon'
+gem 'skim'

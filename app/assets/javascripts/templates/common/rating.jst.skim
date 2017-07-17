@@ -1,0 +1,13 @@
+.voting id="voting_#{@resource.label_vote}"
+  .vote-errors id="vote-errors_#{@resource.label_vote}"
+
+  -if gon.user_id && gon.user_id != @resource.user_id
+    a.links-vote href="/answers/#{@resource.id}/vote_up" data-remote="true" data-method="put" Vote up
+    a.links-vote href="/answers/#{@resource.id}/vote_down" data-remote="true" data-method="put" Vote down
+    a.links-vote href="/answers/#{@resource.id}/unvote" data-remote="true" rel="nofollow" data-method="delete" Unvote
+
+
+  .rating id="rating_#{@resource.label_vote}"
+    p
+      | Rating:
+      = @rating

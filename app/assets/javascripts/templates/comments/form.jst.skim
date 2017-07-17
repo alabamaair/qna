@@ -1,0 +1,8 @@
+.comments_form
+  form.new_comment id="add_comment_#{@commentable_id}" action="/answers/#{@commentable_id}/comments" accept-charset="UTF-8" data-remote="true" method="post" style="display: block;"
+    input name="utf8" value="✓" type="hidden"
+    label for="comment_body" Comment text
+    .errors_comments
+    textarea id="comment_text_#{@commentable_id}" name="comment[body]"
+    .actions
+      input name="commit" value="Create Comment" data-disable-with="Create Comment" type="submit"

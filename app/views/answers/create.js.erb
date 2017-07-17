@@ -1,10 +1,5 @@
 <% if @answer.valid? %>
   $('.answer-errors').html('')
-  <% if remotipart_submitted? %>
-    $('ul.answers').append("<%=  j "#{render(@answer)}" %>");
-  <% else %>
-    $('ul.answers').append("<%=  j render(@answer) %>");
-  <% end %>
   $('textarea#answer_body').val('');
 <% else %>
   document.querySelector('.answer-errors').innerHTML = '<%= j render 'common/errors', resource: @answer %>';

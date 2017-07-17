@@ -1,0 +1,9 @@
+.comments
+  - if user_signed_in?
+    = link_to 'Add comment', '', class: 'add_comment_link', data: { commentable_id: commentable.id }
+
+  .comments_body{ id: "commentable_#{commentable.class}_#{commentable.id}"}
+    - commentable.comments.each do |comment|
+      = render 'comments/comment', comment: comment
+
+  = render 'comments/form', commentable: commentable
