@@ -17,7 +17,7 @@ feature 'Create question', %q{
     fill_in 'Body', with: 'Body'
     click_on 'Create'
 
-    expect(page).to have_content 'Your question successfully created.'
+    expect(page).to have_content 'Question was successfully created.'
     expect(page).to have_content 'Body'
   end
 
@@ -57,7 +57,7 @@ feature 'Create question', %q{
         fill_in 'Body', with: 'Body multiple sessions yay'
         click_on 'Create'
 
-        expect(page).to have_content 'Your question successfully created.'
+        expect(page).to have_content 'Question was successfully created.'
         expect(page).to have_content 'Body multiple sessions yay'
       end
 

@@ -12,7 +12,7 @@ feature 'Delete question' do
     visit question_path(question)
     click_on 'Destroy'
 
-    expect(page).to have_content 'Question destroy successfully.'
+    expect(page).to have_content 'Question was successfully destroyed.'
     expect(page).not_to have_content question.body
   end
 

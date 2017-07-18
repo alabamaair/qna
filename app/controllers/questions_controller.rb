@@ -6,8 +6,7 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :update, :destroy, :mark_best_answer]
   after_action :publish_question, only: [:create]
 
-  respond_to :js, only: [:update]
-  respond_to :json, only: [:mark_best_answer]
+  respond_to :js, only: [:update, :mark_best_answer]
 
   def index
     @questions = Question.all
