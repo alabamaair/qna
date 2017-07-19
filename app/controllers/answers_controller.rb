@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:update, :destroy]
   after_action :publish_answer, only: [:create]
 
+  respond_to :js # , only: [:update, :mark_best_answer]
+
   def new
     @answer = Answer.new
     @answer.attachments.build
@@ -14,15 +16,17 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find params[:question_id]
     @answer = @question.answers.create(answer_params.merge(user: current_user))
+    respond_with @answer
   end
 
   def update
     @answer.update(answer_params) if current_user.author?(@answer)
     @question = @answer.question
+    respond_with @answer
   end
 
   def destroy
-    @answer.destroy if current_user.author?(@answer)
+    respond_with @answer.destroy if current_user.author?(@answer)
   end
 
   private

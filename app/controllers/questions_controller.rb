@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :update, :destroy, :mark_best_answer]
   after_action :publish_question, only: [:create]
 
+  respond_to :js, only: [:update, :mark_best_answer]
+
   def index
     @questions = Question.all
   end
@@ -16,17 +18,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author?(@question)
+    respond_with @question.update(question_params) if current_user.author?(@question)
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
-    else
-      render :new
-    end
+    @question = current_user.questions.create(question_params)
+    respond_with @question
   end
 
   def show
@@ -35,20 +32,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Question destroy successfully.'
-    else
-      flash.now[:alert] = 'You not an author.'
-      render :show
-    end
+    respond_with @question.destroy if current_user.author?(@question)
   end
 
   def mark_best_answer
-    if current_user.author?(@question)
-      @answer = Answer.find params[:answer_id]
-      @answer.mark_best
-    end
+    @answer = Answer.find params[:answer_id]
+    respond_with(@answer.mark_best) if current_user.author?(@question)
   end
 
   private
