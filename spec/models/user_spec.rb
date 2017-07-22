@@ -6,6 +6,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
+  it { should have_many(:authorizations).dependent(:destroy) }
 
   describe '.from_omniauth' do
     let!(:user) { create(:user) }
