@@ -40,6 +40,6 @@ feature 'User can sign in with twitter' do
     mock_auth_invalid_hash('twitter')
     click_on 'Sign in with Twitter'
 
-    expect(page).to have_content 'Please enter your email to complete the login'
+    expect(page).to have_content 'Error authenticate with providers'
   end
 end

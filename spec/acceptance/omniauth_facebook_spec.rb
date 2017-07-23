@@ -34,6 +34,6 @@ feature 'User can sign in with facebook' do
     mock_auth_invalid_hash('facebook')
     click_on 'Sign in with Facebook'
 
-    expect(page).to have_content 'Please enter your email to complete the login'
+    expect(page).to have_content 'Error authenticate with providers'
   end
 end
