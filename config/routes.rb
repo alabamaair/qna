@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_scope :user do
+    post 'enter_email', to: 'omniauth_callbacks#enter_email'
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :questions, concerns: :votable do
     put :mark_best_answer, on: :member

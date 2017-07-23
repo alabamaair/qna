@@ -13,6 +13,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.try(:persisted?)
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: auth.provider.capitalize) if is_navigational_format?
+    else
+      flash[:notice] = 'Please enter your email to complete the login'
+      render 'omniauth_callbacks/enter_email', locals: { auth: auth }
     end
   end
 
