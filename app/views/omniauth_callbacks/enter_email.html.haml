@@ -1,0 +1,6 @@
+= form_tag enter_email_path, method: :post do
+  .form-group
+    = label_tag 'email', 'Email'
+    = email_field_tag :email
+  .actions
+    = submit_tag 'Submit'

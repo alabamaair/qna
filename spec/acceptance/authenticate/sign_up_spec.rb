@@ -9,7 +9,16 @@ feature 'Sign up' do
     fill_in 'Password confirmation', with: '123456'
     click_on 'Sign up'
 
-    expect(page).to have_content 'You have signed up successfully.'
+    open_email 'user@example.com'
+    current_email.click_link 'Confirm my account'
+
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
+
+    fill_in 'Email', with: 'user@example.com'
+    fill_in 'Password', with: '123456'
+    click_on 'Log in'
+
+    expect(page).to have_content 'Signed in successfully.'
   end
 
   scenario 'User try to sign up with incorrect data' do
