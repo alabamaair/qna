@@ -13,29 +13,35 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    authorize Question
     @question = Question.new
     @question.attachments.build
   end
 
   def update
+    authorize @question
     respond_with @question.update(question_params) if current_user.author?(@question)
   end
 
   def create
+    authorize Question
     @question = current_user.questions.create(question_params)
     respond_with @question
   end
 
   def show
+    authorize @question
     @answer = @question.answers.build
     @answer.attachments.build
   end
 
   def destroy
+    authorize @question
     respond_with @question.destroy if current_user.author?(@question)
   end
 
   def mark_best_answer
+    authorize @question
     @answer = Answer.find params[:answer_id]
     respond_with(@answer.mark_best) if current_user.author?(@question)
   end
