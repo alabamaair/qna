@@ -8,8 +8,4 @@ class AttachmentsController < ApplicationController
     authorize @attachment
     respond_with @attachment.destroy if @attachment.attachable.user_id == current_user.id
   end
-
-  def policy_class
-    AttachmentPolicy
-  end
 end

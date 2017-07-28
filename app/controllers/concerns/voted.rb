@@ -36,15 +36,7 @@ module Voted
     render_success
   end
 
-  def policy_class
-    VotePolicy
-  end
-
   private
-
-  def authorized_votes(votes)
-    votes
-  end
 
   def render_success
     render json: { label_vote: @votable.label_vote, rating: @votable.rating }
