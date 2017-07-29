@@ -9,23 +9,27 @@ class AnswersController < ApplicationController
   respond_to :js # , only: [:update, :mark_best_answer]
 
   def new
+    authorize Answer
     @answer = Answer.new
     @answer.attachments.build
   end
 
   def create
+    authorize Answer
     @question = Question.find params[:question_id]
     @answer = @question.answers.create(answer_params.merge(user: current_user))
     respond_with @answer
   end
 
   def update
+    authorize @answer
     @answer.update(answer_params) if current_user.author?(@answer)
     @question = @answer.question
     respond_with @answer
   end
 
   def destroy
+    authorize @answer
     respond_with @answer.destroy if current_user.author?(@answer)
   end
 

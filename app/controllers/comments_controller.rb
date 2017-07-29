@@ -8,11 +8,13 @@ class CommentsController < ApplicationController
   respond_to :js
 
   def create
+    authorize Comment
     respond_with @comment = @commentable.comments.create(comment_params.merge(user: current_user))
   end
 
   def destroy
     @comment = Comment.find params[:id]
+    authorize @comment
     respond_with @comment.destroy if current_user.author?(@comment)
   end
 

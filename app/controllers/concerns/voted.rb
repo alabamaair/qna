@@ -9,6 +9,7 @@ module Voted
 
   def vote_up
     vote = @votable.votes.build(user_id: current_user.id, value: 1)
+    authorize vote
     if vote.save
       render_success
     else
@@ -18,6 +19,7 @@ module Voted
 
   def vote_down
     vote = @votable.votes.build(user_id: current_user.id, value: -1)
+    authorize vote
     if vote.save
       render_success
     else
@@ -26,7 +28,11 @@ module Voted
   end
 
   def unvote
-    @votable.votes.where(:user_id == current_user.id).destroy_all
+    votes = @votable.votes.where(:user_id == current_user.id)
+    votes.each do |vote|
+      authorize vote
+      vote.destroy
+    end
     render_success
   end
 
