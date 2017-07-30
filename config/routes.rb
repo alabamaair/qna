@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
+  use_doorkeeper
+
   concern :votable do
     member do
       put :vote_up
@@ -22,6 +24,14 @@ Rails.application.routes.draw do
   end
   resources :attachments, only: :destroy
   resources :comments, only: :destroy
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles do
+        get :me, on: :collection
+      end
+    end
+  end
 
   root to: 'questions#index'
 

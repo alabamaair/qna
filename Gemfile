@@ -51,6 +51,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'capybara-email'
+  gem 'json_spec'
 end
 
 
@@ -86,3 +87,5 @@ gem 'omniauth-twitter'
 gem 'rb-readline' # console error load
 
 gem 'pundit'
+
+gem 'doorkeeper'
