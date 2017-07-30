@@ -7,13 +7,13 @@ RSpec.describe ProfilesPolicy do
     let(:user) { nil }
 
     it { should_not permit(:me)   }
-    it { should_not permit(:list) }
+    it { should_not permit(:index) }
   end
 
   context "for a user" do
     let(:user) { create(:user) }
 
     it { should permit(:me)    }
-    it { should permit(:list)  }
+    it { should permit(:index)  }
   end
 end

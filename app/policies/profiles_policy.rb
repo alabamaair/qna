@@ -3,7 +3,7 @@ ProfilesPolicy = Struct.new(:user, :profiles) do
     user.present?
   end
 
-  def list?
+  def index?
     user.present?
   end
 end
