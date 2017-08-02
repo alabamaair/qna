@@ -52,6 +52,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'capybara-email'
   gem 'json_spec'
+  gem 'json-schema'
 end
 
 
@@ -89,3 +90,7 @@ gem 'rb-readline' # console error load
 gem 'pundit'
 
 gem 'doorkeeper'
+
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'

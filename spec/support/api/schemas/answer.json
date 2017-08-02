@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties" : {
+    "answer" : {
+      "type" : "object",
+      "properties" : {
+        "id" : { "type" : "integer" },
+        "body" : { "type" : "string" },
+        "created_at" : { "type" : "string", "format": "date-time" },
+        "updated_at" : { "type" : "string", "format": "date-time" },
+        "user_id" : { "type" : "integer" },
+        "comments" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "id" : { "type" : "integer" },
+              "body" : { "type" : "string" },
+              "user_id" : { "type" : "integer" }
+            }
+          }
+        },
+        "attachments" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "file_url" : { "type" : "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
