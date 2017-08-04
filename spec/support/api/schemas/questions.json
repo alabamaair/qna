@@ -1,0 +1,9 @@
+{
+  "type" : "object",
+  "properties" : {
+    "questions" : {
+      "type" : "array",
+      "items" : { "$ref" : "question.json#/properties/question" }
+    }
+  }
+}
