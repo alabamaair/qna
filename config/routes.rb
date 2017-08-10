@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   use_doorkeeper
 
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
   resources :questions, concerns: :votable do
     put :mark_best_answer, on: :member
     resources :comments, only: :create, defaults: { commentable: 'question' }
+    resources :subscriptions, only: [:create, :destroy], shallow: true
     resources :answers, shallow: true, concerns: :votable do
       resources :comments, only: :create, defaults: { commentable: 'answer' }
     end
@@ -39,4 +42,8 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   mount ActionCable.server => '/cable'
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

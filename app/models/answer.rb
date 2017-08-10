@@ -12,6 +12,8 @@ class Answer < ApplicationRecord
 
   validates :body, :question_id, :user_id, presence: true
 
+  after_create_commit { AnswersNotifierJob.perform_later(self) }
+
   default_scope { order(created_at: :asc) }
 
   def mark_best

@@ -1,6 +1,8 @@
 .question-container{id: "question_container#{@question.id}"}
   = render 'questions/question_item', question: @question
 
+  = render 'subscriptions/subscription', question: @question
+
   = render 'common/rating', resource: @question
 
   .question_comments{id: "comments_#{@question.id}"}
