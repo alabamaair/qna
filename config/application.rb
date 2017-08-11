@@ -12,6 +12,8 @@ module Qna
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
 
+    config.active_job.queue_adapter = :sidekiq
+
     ActiveModelSerializers.config.adapter = :json
 
     # Settings in config/environments/* take precedence over those specified here.

@@ -1,0 +1,11 @@
+$(document).ready(function(){
+  <% if @subscription.errors.any? %>
+    $('.notice').html('');
+    <% @subscription.errors.full_messages.each do |message| %>
+      $('.notice').addClass('alert alert-info').html("<%= j message %>");
+    <% end %>
+  <% else %>
+    $('.notice').removeClass('alert alert-info').html('');
+    $('.subscription').html('<a data-remote="true" rel="nofollow" data-method="delete" href="/subscriptions/<%= @subscription.id %>">Unsubscribe</a>');
+  <% end %>
+});

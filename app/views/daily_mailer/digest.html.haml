@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %meta{ content: "text/html; charset=UTF-8", 'http-equiv' => "Content-Type" }
+  %body
+    %h1 Daily digest
+    -@questions.each_with_index do |q, i|
+      %p
+        = i + 1
+        %br
+        = link_to "#{q.title}", q
+        %br
+        = q.body
