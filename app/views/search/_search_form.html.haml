@@ -1,0 +1,5 @@
+%p Search:
+= form_tag search_path, method: :get do
+  = select_tag 'resource', options_for_select(Search::RESOURCES, params[:resource])
+  = search_field_tag :query, params[:query]
+  = submit_tag 'Find'
