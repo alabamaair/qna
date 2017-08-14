@@ -1,0 +1,6 @@
+%h2 Search:
+- if @result.present?
+  - @result.each do |item|
+    =render "#{item.class.name.downcase}", item: item
+- else
+  Not found

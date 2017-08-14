@@ -23,3 +23,6 @@ config/secrets.yml
 /public/uploads
 
 vendor/gems/foundation-rails/
+
+config/*.sphinx.conf
+db/sphinx

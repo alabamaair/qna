@@ -16,7 +16,7 @@ class Question < ApplicationRecord
 
   validates :title, :body, :user_id, presence: true
 
-  scope :in_digest, -> { where(created_at: Time.zone.now-24.hours..Time.zone.now) }
+  scope :in_digest, -> { where(created_at: Time.zone.now - 24.hours..Time.zone.now) }
 
   def subscribe?(user)
     subscriptions.where(user_id: user.id).exists?

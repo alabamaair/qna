@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
   resources :comments, only: :destroy
 
+  resource :search, only: :show, controller: 'search'
+
   namespace :api do
     namespace :v1 do
       resources :profiles do
