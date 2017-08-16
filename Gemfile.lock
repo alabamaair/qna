@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/cowboyd/therubyracer.git
+  revision: 466a1f0d4f696acfe971899272359623ec0a7a97
+  specs:
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -333,9 +341,6 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     temple (0.8.0)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
     thinking-sphinx (3.3.0)
       activerecord (>= 3.1.0)
       builder (>= 2.1.2)
@@ -421,7 +426,7 @@ DEPENDENCIES
   skim
   spring
   spring-watcher-listen (~> 2.0.0)
-  therubyracer
+  therubyracer!
   thinking-sphinx
   turbolinks (~> 5)
   tzinfo-data

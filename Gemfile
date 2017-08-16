@@ -109,4 +109,4 @@ gem 'thinking-sphinx'
 
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
-gem 'therubyracer'
+gem 'therubyracer', git: 'https://github.com/cowboyd/therubyracer.git'
