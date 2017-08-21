@@ -1,4 +1,4 @@
-- cache [@question, current_user] do
+- cache [@question, user_signed_in?, current_user.author?(@question)] do
   .question-container{id: "question_container#{@question.id}"}
     = render 'questions/question_item', question: @question
 

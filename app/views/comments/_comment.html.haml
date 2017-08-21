@@ -1,5 +1,5 @@
 .comment{ id: "comment_#{comment.id}"}
-  - cache [comment, current_user] do
+  - cache [comment, user_signed_in?, current_user.author?(comment)] do
     = comment.body
 
   - if current_user.try(:author?, comment)
