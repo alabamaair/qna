@@ -1,6 +1,6 @@
 .container-answer{id: "container-answer-#{answer.id}"}
   - if answer.persisted?
-    - cache answer do
+    - cache [answer, current_user] do
       - if answer.best
         .best-answer= '=== Best answer ==='
       %li.answer-body{id: "answer_#{answer.id}"}
