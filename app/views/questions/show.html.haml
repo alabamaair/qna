@@ -1,30 +1,33 @@
-.question-container{id: "question_container#{@question.id}"}
-  = render 'questions/question_item', question: @question
+- cache [@question, user_signed_in?, current_user.author?(@question)] do
+  .question-container{id: "question_container#{@question.id}"}
+    = render 'questions/question_item', question: @question
 
-  = render 'subscriptions/subscription', question: @question
+    = render 'subscriptions/subscription', question: @question
 
-  = render 'common/rating', resource: @question
+    = render 'common/rating', resource: @question
 
-  .question_comments{id: "comments_#{@question.id}"}
-    = render 'comments/comments', commentable: @question
+    .question_comments{id: "comments_#{@question.id}"}
+      = render 'comments/comments', commentable: @question
 
-%hr
-%ul.answers{data: { question: "#{@question.id}" }}= render @question.answers.reject(&:new_record?).sort_by { |a| a.best ? -1: 0 }
+  %hr
+  %ul.answers{data: { question: "#{@question.id}" }}
+    - @question.answers.each do |answer|
+      = render 'answers/answer', answer: answer
 
-- if user_signed_in?
-  %p Create your answer here:
+  - if user_signed_in?
+    %p Create your answer here:
 
-  = form_for [@question, @answer], remote: true do |f|
-    .field
-      = f.label :body
-      .answer-errors
-      = f.text_area :body
-    .field
-      = f.fields_for :attachments do |attachment|
-        = render 'common/attachment_fields', f: attachment
-      .links
-        = link_to_add_association 'add attachment', f, :attachments, partial: 'common/attachment_fields'
-    .actions
-      = f.submit 'Create answer'
-- else
-  %p For create answers you need to sign in or sign up before continuing.
+    = form_for [@question, @answer], remote: true do |f|
+      .field
+        = f.label :body
+        .answer-errors
+        = f.text_area :body
+      .field
+        = f.fields_for :attachments do |attachment|
+          = render 'common/attachment_fields', f: attachment
+        .links
+          = link_to_add_association 'add attachment', f, :attachments, partial: 'common/attachment_fields'
+      .actions
+        = f.submit 'Create answer'
+  - else
+    %p For create answers you need to sign in or sign up before continuing.

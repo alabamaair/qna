@@ -114,3 +114,5 @@ gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer', git: 'https://github.com/cowboyd/therubyracer.git'
 
 gem 'unicorn'
+
+gem 'redis-rails'

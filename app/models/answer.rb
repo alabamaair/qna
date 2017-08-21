@@ -2,7 +2,7 @@
 class Answer < ApplicationRecord
   include Votable
 
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
 
   has_many :attachments, as: :attachable, dependent: :destroy
@@ -14,7 +14,7 @@ class Answer < ApplicationRecord
 
   after_create_commit { AnswersNotifierJob.perform_later(self) }
 
-  default_scope { order(created_at: :asc) }
+  default_scope { order('best DESC') }
 
   def mark_best
     ActiveRecord::Base.transaction do
